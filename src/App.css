@@ -1,0 +1,54 @@
+.page-footer .footer-copyright {
+  background-color: transparent;
+}
+.content {
+  min-height: calc(100vh - 64px - 70px);
+  padding: 1.5rem 0;
+}
+.movies {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+.movie {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.card-image {
+  height: 79%;
+}
+.card-content {
+  height: 21%;
+  min-height: 144px;
+}
+.card-title {
+  padding-right: calc(24px + 15px);
+  position: relative;
+}
+.card-title .material-icons {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.card-content .card-title {
+  text-overflow: ellipsis;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+fieldset {
+  margin: 0;
+  padding: 1.5rem 0;
+  border: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+fieldset label {
+  margin-right: 1.5rem;
+}
+[type="radio"]:not(:checked)+span, [type="radio"]:checked+span {
+  padding-left: 2rem;
+}

@@ -6,7 +6,7 @@ import {Preloader} from "../components/Preloader";
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 class Main extends Component {
-    url = "http://www.omdbapi.com/?";
+    url = "https://www.omdbapi.com/?";
 
     state = {
         posts : [],

@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-movies/static/css/main.6fc1527a.css",
-    "main.js": "/react-movies/static/js/main.a58b4d53.js",
+    "main.js": "/react-movies/static/js/main.d36ef5c9.js",
     "static/media/material-icons-two-tone.woff": "/react-movies/static/media/material-icons-two-tone.3baa5b8f3469222b822d.woff",
     "static/media/material-icons-two-tone.woff2": "/react-movies/static/media/material-icons-two-tone.4ef4218c522f1eb6b5b1.woff2",
     "static/media/material-icons-round.woff": "/react-movies/static/media/material-icons-round.5d681e2edae8c60630db.woff",
@@ -14,10 +14,10 @@
     "static/media/material-icons.woff2": "/react-movies/static/media/material-icons.0c35d18bf06992036b69.woff2",
     "index.html": "/react-movies/index.html",
     "main.6fc1527a.css.map": "/react-movies/static/css/main.6fc1527a.css.map",
-    "main.a58b4d53.js.map": "/react-movies/static/js/main.a58b4d53.js.map"
+    "main.d36ef5c9.js.map": "/react-movies/static/js/main.d36ef5c9.js.map"
   },
   "entrypoints": [
     "static/css/main.6fc1527a.css",
-    "static/js/main.a58b4d53.js"
+    "static/js/main.d36ef5c9.js"
   ]
 }

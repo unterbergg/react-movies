@@ -1,53 +1,47 @@
-import React, {Component, useRef} from "react";
+import React, {useState} from "react";
 
-class Search extends Component {
-    constructor() {
-        super();
+const Search = (props) => {
+    const {searchRef, formRef} = props;
 
-        this.state = {
-            search: "",
-        }
+    const [search, setSearch] = useState('');
 
-        this.typingTimer = null;
-        this.doneTypingInterval = 1000;
+    let typingTimer = null;
+    const doneTypingInterval = 1000;
+
+    const handleSearch = (event) => {
+        setSearch(event.target.value);
     }
 
-    handleSearch = (event) => {
-        this.setState({[event.target.name]: event.target.value})
+    const handleKeyUp = () => {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
     }
 
-    handleKeyUp = () => {
-        clearTimeout(this.typingTimer);
-        this.typingTimer = setTimeout(this.doneTyping, this.doneTypingInterval);
+    const handleKeyDown = () => {
+        clearTimeout(typingTimer);
     }
 
-    handleKeyDown = () => {
-        clearTimeout(this.typingTimer);
+    const doneTyping = () => {
+        formRef.current.requestSubmit();
     }
 
-    doneTyping = () => {
-        this.props.formRef.current.requestSubmit();
-        // this.props.callback(this.state.search);
-    }
 
-    render() {
-        return <div className="row">
-            <div className="input-field">
-                <input
-                    className="validate"
-                    ref={this.props.searchRef}
-                    id="search"
-                    name="search"
-                    type="search"
-                    placeholder="Search"
-                    value={this.state.search}
-                    onChange={this.handleSearch}
-                    onKeyUp={this.handleKeyUp}
-                    onKeyDown={this.handleKeyDown}
-                />
-            </div>
+    return <div className="row">
+        <div className="input-field">
+            <input
+                className="validate"
+                ref={searchRef}
+                id="search"
+                name="search"
+                type="search"
+                placeholder="Search"
+                value={search}
+                onChange={handleSearch}
+                onKeyUp={handleKeyUp}
+                onKeyDown={handleKeyDown}
+            />
         </div>
-    }
+    </div>
 }
 
-export default Search;
+export {Search};

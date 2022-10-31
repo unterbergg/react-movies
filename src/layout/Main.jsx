@@ -1,58 +1,71 @@
-import React, {Component} from "react";
-import List from "../components/List";
-import Form from "../components/Form";
+import React, {useState, useEffect} from "react";
+import {List} from "../components/List";
+import {Form} from "../components/Form";
 import {Preloader} from "../components/Preloader";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
-class Main extends Component {
-    url = "https://www.omdbapi.com/?";
+const Main = (props) => {
+    const url = "https://www.omdbapi.com/?";
 
-    state = {
-        posts : [],
-        error : "",
-        isLoaded : false,
-    }
+    const [posts, setPosts] = useState([]);
+    const [error, setError] = useState("");
+    const [isLoaded, setIsLoaded] = useState(false);
 
-    componentDidMount = () => {
-        fetch(`${this.url}s=matrix&apikey=${API_KEY}`)
+
+    const componentDidMount = () => {
+        fetch(`${url}s=matrix&apikey=${API_KEY}`)
             .then((response) => {
                 return response.json();
             })
             .then((data) => {
-                this.setState({posts : data.Search, isLoaded : true});
+                setPosts(data.Search);
+                setIsLoaded(true);
             });
     }
 
-    searchMovies = (value, filter) => {
-        this.setState({isLoaded : false}, () => {
-            fetch(`${this.url}s=${value ? value : "matrix"}&${(filter === "all" ? "" : `type=${filter}&`)}apikey=${API_KEY}`)
+    useEffect(() => {
+        if(!isLoaded) {
+            fetch(`${url}s=matrix&apikey=${API_KEY}`)
                 .then((response) => {
                     return response.json();
                 })
                 .then((data) => {
-                    const {Response, Search, Error} = data;
-                    Response === 'True' ?
-                        this.setState({posts : Search, isLoaded : true, error : ""})
-                        : this.setState({error : Error, posts : [], isLoaded : true});
+                    setPosts(data.Search);
+                    setIsLoaded(true);
                 });
-        })
-    }
+        }
+    }, [posts])
 
-    render() {
-        const {posts, error, isLoaded} = this.state
-
-        return <main className="content">
-            <div className="container">
-                <Form callback={this.searchMovies} />
-                {
-                    (isLoaded) ?
-                        <List posts={this.state.posts} error={this.state.error} /> :
-                        <Preloader />
+    const searchMovies = (value, filter) => {
+        setIsLoaded(false);
+        fetch(`${url}s=${value ? value : "matrix"}&${(filter === "all" ? "" : `type=${filter}&`)}apikey=${API_KEY}`)
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                const {Response, Search, Error} = data;
+                if(Response === 'True') {
+                    setPosts(Search);
+                    setError("");
+                } else {
+                    setError(Error);
+                    setPosts([]);
                 }
-            </div>
-        </main>
+                setIsLoaded(true);
+            });
     }
+
+    return <main className="content">
+        <div className="container">
+            <Form callback={searchMovies} />
+            {
+                (isLoaded) ?
+                    <List posts={posts} error={error} /> :
+                    <Preloader />
+            }
+        </div>
+    </main>
 }
 
-export default Main
+export {Main}

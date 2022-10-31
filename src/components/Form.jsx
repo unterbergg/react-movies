@@ -1,40 +1,41 @@
-import React, {Component} from "react";
-import Search from "./Search";
-import Filter from "./Filter";
+import React, {useRef} from "react";
+import {Search} from "./Search";
+import {Filter} from "./Filter";
 
-class Form extends Component {
-    state = {
-        searchRef: React.createRef(),
-        formRef: React.createRef(),
-        filterRef: React.createRef(),
-    }
+const Form  = (props) => {
+    const {
+        callback = Function.prototype,
+    } = props;
 
-    handleSubmit = (event) => {
+    const searchEl = useRef(null);
+    const formEl = useRef(null);
+    const filterEl = useRef(null);
+
+    const handleSubmit = (event) => {
         event.preventDefault();
-        this.props.callback(
-            this.state.searchRef.current.value,
-            this.state.filterRef.current.querySelector('input[name="type"]:checked').dataset.type
+        callback(
+            searchEl.current.value,
+            filterEl.current.querySelector('input[name="type"]:checked').dataset.type
         );
     }
 
-    render() {
-        return <form
-            ref={this.state.formRef}
-            onSubmit={this.handleSubmit}
-        >
-            <Search
-                callback={this.props.callback}
-                searchRef={this.state.searchRef}
-                formRef={this.state.formRef}
-            
-            />
-            <Filter
-                callback={this.props.callback}
-                formRef={this.state.formRef}
-                filterRef={this.state.filterRef}
-            />
-        </form>
-    }
+
+    return <form
+        ref={formEl}
+        onSubmit={handleSubmit}
+    >
+        <Search
+            callback={callback}
+            searchRef={searchEl}
+            formRef={formEl}
+
+        />
+        <Filter
+            callback={callback}
+            formRef={formEl}
+            filterRef={filterEl}
+        />
+    </form>
 }
 
-export default Form
+export {Form}
